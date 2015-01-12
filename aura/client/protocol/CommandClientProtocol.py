@@ -25,8 +25,9 @@ class CommandClientProtocol(basic.LineReceiver):
         self.peer = self.transport.getPeer()
         log.msg('Connected to server at %s' % (self.peer)) # logs the connection
 
-        #self.setName = setName = cmd.servercmd('reg', self.factory.name)
+        #self.name = setName = cmd.servercmd('reg', self.factory.name)
         #self.sendLine(setName) # register with server
+        self.sendLine('hi')
 
     def send(self, text):
         """
