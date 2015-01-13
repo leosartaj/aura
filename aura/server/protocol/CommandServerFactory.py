@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 
 ##
-# PyChat
+# Aura
 # https://github.com/leosartaj/aura.git
 #
 # Copyright (c) 2014 Sartaj Singh
@@ -10,11 +10,14 @@
 
 from twisted.python import log
 from twisted.internet.protocol import ServerFactory
+from CommandServerProtocol import CommandServerProtocol
 
 class CommandServerFactory(ServerFactory):
     """
     Implements the server factory
     """
+    protocol = CommandServerProtocol
+
     def __init__(self):
         self.clients = [] # connected clients
 
@@ -36,6 +39,7 @@ class CommandServerFactory(ServerFactory):
         """
         for client in self.clients:
             client.transport.loseConnection()
+        self.clients = []
 
     def removeClients(self, client):
         """

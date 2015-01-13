@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 
 ##
-# PyChat
+# Aura
 # https://github.com/leosartaj/aura.git
 #
 # Copyright (c) 2014 Sartaj Singh

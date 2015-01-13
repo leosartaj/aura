@@ -1,7 +1,7 @@
 #!/usr/bin/env python2
 
 ##
-# PyChat
+# Aura
 # https://github.com/leosartaj/aura.git
 #
 # Copyright (c) 2014 Sartaj Singh
@@ -14,6 +14,11 @@ import os
 # twisted imports
 from twisted.protocols import basic
 from twisted.python import log
+
+# user imports
+import command as cmd
+
+CLIENT_PREFIX = cmd.CLIENT_PREFIX
 
 class CommandServerProtocol(basic.LineReceiver):
     """
@@ -31,10 +36,8 @@ class CommandServerProtocol(basic.LineReceiver):
         """
         Handle received lines
         """
-        #if not self._parse(line):
-        log.msg('Received %s from %s' %(line, self.peername))
-            #msg = cmd.addFirst(line, self.peername)
-            #self.relay(msg)
+        if not self._parse(line):
+            log.msg('Received %s from %s' %(line, self.peername))
 
     def _parse(self, line):
         """
@@ -47,9 +50,6 @@ class CommandServerProtocol(basic.LineReceiver):
         if comd == 'reg':
             self.peername = value
             log.msg('PeerName of %s is %s' %(self.peer, self.peername))
-            self.factory.updateUsers(self.peername, self.peer) # register name and ip with factory
-            msg = cmd.addFirst(cmd.clientcmd('add', str(self.peer)), self.peername)
-            self.relay(msg)
         else:
             return False
         return True
