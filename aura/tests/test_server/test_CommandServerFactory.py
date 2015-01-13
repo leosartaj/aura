@@ -10,7 +10,7 @@
 
 from twisted.trial import unittest
 from aura.server.protocol.CommandServerFactory import CommandServerFactory
-from aura.tests.test_server import helpers
+from aura.tests import helpers
 
 class TestCommandServerFactory(unittest.TestCase):
     """

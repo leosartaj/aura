@@ -15,6 +15,9 @@ import os
 from twisted.protocols import basic
 from twisted.python import log
 
+# User imports
+import command as cmd
+
 class CommandClientProtocol(basic.LineReceiver):
     """
     Implements the client interaction protocol
@@ -25,9 +28,9 @@ class CommandClientProtocol(basic.LineReceiver):
         self.peer = self.transport.getPeer()
         log.msg('Connected to server at %s' % (self.peer)) # logs the connection
 
-        #self.name = setName = cmd.servercmd('reg', self.factory.name)
-        #self.sendLine(setName) # register with server
-        self.sendLine('hi')
+        self.name = self.factory.name
+        setName = cmd.servercmd('reg', self.name)
+        self.sendLine(setName) # register with server
 
     def send(self, text):
         """

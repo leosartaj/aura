@@ -12,16 +12,17 @@
 from twisted.python import log
 from twisted.internet.protocol import ClientFactory
 
+# user imports
+from CommandClientProtocol import CommandClientProtocol
+
 class CommandClientFactory(ClientFactory):
     """
     Implements the client factory
     """
+    protocol = CommandClientProtocol
+
     def __init__(self, name):
         self.name = name
-
-    def buildProtocoll(self, addr):
-        proto = ClientFactory.buildProtocol(self, addr)
-        return proto
 
     def clientConnectionFailed(self, connector, reason):
         log.err(reason.getErrorMessage())

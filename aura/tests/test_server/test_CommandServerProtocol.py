@@ -11,7 +11,7 @@
 import os
 from twisted.trial import unittest
 from aura.server.protocol.CommandServerFactory import CommandServerFactory
-from aura.tests.test_server import helpers
+from aura.tests import helpers
 from aura import command as cmd
 
 class TestCommandServerProtocol(unittest.TestCase):

@@ -12,4 +12,4 @@ import sys
 from os.path import realpath, dirname
 
 sys.path.append(dirname(realpath(__file__)) + '/../..')
-from command import * # access to command module
+import command # access to command module
