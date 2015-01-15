@@ -28,6 +28,7 @@ class CommandServerProtocol(basic.LineReceiver):
 
     def connectionMade(self):
         self.peer = self.transport.getPeer()
+        self.player = self.factory.player
         self.peername = 'unregistered'
         self.factory.updateClients(self)
         log.msg('Connected to %s' %(self.peer))
@@ -53,6 +54,13 @@ class CommandServerProtocol(basic.LineReceiver):
         else:
             return False
         return True
+
+    def sendcmd(self, comd, value):
+        """
+        sends a command to the client
+        """
+        tosend = cmd.clientcmd(comd, value)
+        self.sendLine(tosend)
 
     def relay(self, line):
         """

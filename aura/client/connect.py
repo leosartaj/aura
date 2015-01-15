@@ -12,7 +12,10 @@
 Handles connection related functionality
 """
 
-# factory
+# twisted imports
+from twisted.internet import reactor
+
+# user imports
 from protocol.CommandClientFactory import CommandClientFactory
 
 def connect(host, port, name='default'):

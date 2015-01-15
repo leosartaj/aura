@@ -19,16 +19,32 @@ CLIENT_PREFIX = 'c$'
 # separator for command value pairs
 SEPARATOR = '~'
 
-def validate(line, prefix=''):
+def validate(line, prefix='', sep=SEPARATOR):
     """
     Validates if the line starts with the prefix
     returns True if success
     or False if fail
     """
-    len_prefix = len(prefix)
-    if line[0:len_prefix] != prefix:
+    leng = len(prefix) + len(sep)
+    if line[0:leng] != prefix + sep:
         return False
     return True
+
+def join(words=[], sep=SEPARATOR):
+    """
+    Join a list separated by sep
+    """
+    return sep.join(words)
+
+def separate(line, sep=SEPARATOR):
+    """
+    Separate a line into two based on a separator
+    """
+    index = line.find(sep)
+    if index == -1:
+        return None, line
+    first, second = line[:index], line[index + len(sep):]
+    return first, second
 
 def parse(line, prefix='', sep=SEPARATOR):
     """
@@ -42,14 +58,11 @@ def parse(line, prefix='', sep=SEPARATOR):
     returns None, line
     """
     
-    if not validate(line, prefix):
+    if not validate(line, prefix, sep):
         return None, line
     total_len = len(prefix) + len(sep)
     rem_line = line[total_len:]
-    index = rem_line.find(sep)
-    if index == -1:
-        return None, line
-    comd, value = rem_line[:index], rem_line[index + len(sep):]
+    comd, value = separate(rem_line, sep)
     return comd, value
 
 def extractFirst(line, sep=SEPARATOR):

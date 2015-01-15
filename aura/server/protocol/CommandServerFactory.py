@@ -8,9 +8,13 @@
 # Licensed under the MIT license.
 ##
 
+# Twisted imports
 from twisted.python import log
 from twisted.internet.protocol import ServerFactory
+
+# user Imports
 from CommandServerProtocol import CommandServerProtocol
+import media
 
 class CommandServerFactory(ServerFactory):
     """
@@ -20,6 +24,8 @@ class CommandServerFactory(ServerFactory):
 
     def __init__(self):
         self.clients = [] # connected clients
+        self.player = media.MediaPlayer()
+        self.player.playFile('tests/bach.mp3')
 
     def updateClients(self, client):
         """

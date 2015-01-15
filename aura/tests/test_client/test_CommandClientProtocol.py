@@ -39,9 +39,32 @@ class TestCommandClientProtocol(unittest.TestCase):
     def test_play(self):
         proto, tr = self.proto, self.tr
         self.assertEqual(proto.player.now, None)
-        playcmd = self._prepare(cmd.clientcmd('play', self.audio))
+        value = cmd.join([self.audio, '0.0'])
+        playcmd = self._prepare(cmd.clientcmd('play', value))
         proto.dataReceived(playcmd)
         self.assertEqual(proto.player.now, self.audio)
+
+    def test_play_seek(self):
+        proto, tr = self.proto, self.tr
+        self.assertEqual(proto.player.now, None)
+        value = cmd.join([self.audio, '100'])
+        playcmd = self._prepare(cmd.clientcmd('play', value))
+        proto.dataReceived(playcmd)
+        self.assertEqual(proto.player.now, self.audio)
+        diff = proto.player.time - 100
+        self.assertTrue(diff < 0.35)
+
+    def test_seek(self):
+        proto, tr = self.proto, self.tr
+        self.assertEqual(proto.player.now, None)
+        value = cmd.join([self.audio, '0.0'])
+        playcmd = self._prepare(cmd.clientcmd('play', value))
+        proto.dataReceived(playcmd)
+        self.assertEqual(proto.player.now, self.audio)
+        seekcmd = self._prepare(cmd.clientcmd('seek', '100'))
+        proto.dataReceived(seekcmd)
+        diff = abs(proto.player.time - 100)
+        self.assertTrue(diff < 0.35)
 
     def test_pause(self):
         proto, tr = self.proto, self.tr

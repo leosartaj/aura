@@ -59,8 +59,13 @@ class CommandClientProtocol(basic.LineReceiver):
         comd, value = cmd.parse(line, SERVER_PREFIX)
         player = self.player
         if comd == 'play':
-            player.playFile(value)
+            audio, seek = cmd.separate(value)
+            player.playFile(audio, seek=float(seek))
             newline = 'Player started playing %s' %(value)
+        elif comd == 'seek':
+            value = float(value)
+            player.seekto(value)
+            newline = 'Forwared to %d seconds' %(value)
         elif comd == 'pause':
             player.pause()
             newline = 'Player Paused'
