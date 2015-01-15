@@ -17,6 +17,9 @@ from twisted.python import log
 
 # User imports
 import command as cmd
+import media
+
+SERVER_PREFIX = cmd.SERVER_PREFIX
 
 class CommandClientProtocol(basic.LineReceiver):
     """
@@ -27,6 +30,8 @@ class CommandClientProtocol(basic.LineReceiver):
     def connectionMade(self):
         self.peer = self.transport.getPeer()
         log.msg('Connected to server at %s' % (self.peer)) # logs the connection
+
+        self.player = media.MediaPlayer()
 
         self.name = self.factory.name
         setName = cmd.servercmd('reg', self.name)
@@ -43,4 +48,26 @@ class CommandClientProtocol(basic.LineReceiver):
         """
         Handles recieved line
         """
-        log.msg('%s' % (line))
+        line = self._parse(line)
+        if line:
+            log.msg('%s' % (line))
+
+    def _parse(self, line):
+        """
+        Parse line for commands
+        """
+        comd, value = cmd.parse(line, SERVER_PREFIX)
+        player = self.player
+        if comd == 'play':
+            player.playFile(value)
+            newline = 'Player started playing %s' %(value)
+        elif comd == 'pause':
+            player.pause()
+            newline = 'Player Paused'
+        elif comd == 'volume':
+            value = float(value)
+            player.volume = value
+            newline = 'Volume changed to %d' %(value)
+        else:
+            return line
+        return newline

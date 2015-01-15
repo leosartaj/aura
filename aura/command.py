@@ -84,14 +84,14 @@ def cmd(command, value, prefix='', sep=SEPARATOR):
     msg = prefix + sep + command + sep + value
     return msg
 
-def servercmd(command, value):
+def servercmd(command, value=''):
     """
     returns command to send to the server
     """
     msg = cmd(command, value, CLIENT_PREFIX, SEPARATOR)
     return msg
 
-def clientcmd(command, value, name=''):
+def clientcmd(command, value='', name=''):
     """
     returns command to send to the client
     """

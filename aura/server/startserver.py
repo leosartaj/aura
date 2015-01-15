@@ -18,7 +18,6 @@ from twisted.internet import error
 
 # factory/protocol imports
 from protocol.CommandServerFactory import CommandServerFactory
-from protocol.CommandServerProtocol import CommandServerProtocol
 
 def listen(host, port):
     """
@@ -28,7 +27,6 @@ def listen(host, port):
     otherwise returns False
     """
     factory = CommandServerFactory() # initialize factory
-    factory.protocol = CommandServerProtocol 
     try:
         listener = reactor.listenTCP(port, factory, interface=host)
     except error.CannotListenError:

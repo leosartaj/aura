@@ -12,11 +12,7 @@
 Handles connection related functionality
 """
 
-# Twisted imports
-from twisted.internet import defer
-from twisted.internet import reactor
-
-# protocol
+# factory
 from protocol.CommandClientFactory import CommandClientFactory
 
 def connect(host, port, name='default'):

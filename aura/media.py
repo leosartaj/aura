@@ -25,6 +25,7 @@ class MediaPlayer(pyglet.media.Player):
     Media Player 
     """
     def __init__(self):
+        self.now = None
         super(MediaPlayer, self).__init__()
 
     def _load(self, audio, source=False):
@@ -51,5 +52,6 @@ class MediaPlayer(pyglet.media.Player):
         """
         self._load(audio, source)
         self.next
+        self.now = audio
         if seek:
             self.seekto(seek)
