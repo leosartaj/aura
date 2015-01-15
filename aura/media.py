@@ -7,33 +7,37 @@
 # Copyright (c) 2014 Sartaj Singh
 # Licensed under the MIT license.
 ##
+
+"""
+Handles the media related functionality
+"""
+
 import pyglet
+
+def startLoop():
+    """
+    Start the event loop
+    """
+    pyglet.app.run()
 
 class MediaPlayer(pyglet.media.Player):
     """
-    Media Player functions
+    Media Player 
     """
-    def __init__(self, audio=[]):
-        self.audio = audio
+    def __init__(self):
         super(MediaPlayer, self).__init__()
 
-    def _load(self, audio):
+    def _load(self, audio, source=False):
         """
         Adds a file to the queue
         """
-        load = pyglet.media.load(audio, streaming=False)
-        self.queue(load)
+        if not source:
+            audio = pyglet.media.load(audio, streaming=False)
+        self.queue(audio)
 
-    def load_files(self, audio):
+    def seekto(self, seek):
         """
-        save the files to be played
-        """
-        for file in audio:
-            self.audio.append(file)
-
-    def moveto(self, seek):
-        """
-        Move to a particular time
+        Seek to a particular time in the current audio
         """
         if self.playing:
             self.pause()
@@ -41,17 +45,11 @@ class MediaPlayer(pyglet.media.Player):
         if not self.playing:
             self.play()
 
-    def playFile(self, audio=None, seek=None):
+    def playFile(self, audio, seek=None, source=False):
         """
         Play a file
         """
-        self._load(audio)
+        self._load(audio, source)
         self.next
-        if self.seek:
-            self.moveto(seek)
-
-def startLoop():
-    """
-    Start the event loop
-    """
-    pyglet.app.run()
+        if seek:
+            self.seekto(seek)
