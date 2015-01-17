@@ -29,8 +29,8 @@ from client import connect
 
 if __name__ == '__main__':
     main.startLogging(sys.stdout)
-    if sys.argv.pop() == 's':
-        start.listen('127.0.0.1', 9001)
+    if len(sys.argv) == 3 and sys.argv[2] == 's':
+        start.listen(sys.argv[1], 9001)
     else:
-        connect.connect('127.0.0.1', 9001)
+        connect.connect(sys.argv[1], 9001)
     reactor.run()

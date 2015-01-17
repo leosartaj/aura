@@ -26,6 +26,7 @@ class CommandServerFactory(ServerFactory):
     def __init__(self):
         self.clients = [] # connected clients
         self.player = media.MediaPlayer()
+        self.player.play()
         self.player.playFile('tests/bach.mp3')
 
     def updateClients(self, client):

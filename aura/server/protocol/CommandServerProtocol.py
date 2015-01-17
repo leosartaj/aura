@@ -36,7 +36,6 @@ class CommandServerProtocol(basic.LineReceiver):
 
     def tell_client(self):
         player = self.player
-        player.play()
         volume = str(player.volume)
         volumecmd = cmd.clientcmd('volume', volume)
         self.sendLine(volumecmd)
