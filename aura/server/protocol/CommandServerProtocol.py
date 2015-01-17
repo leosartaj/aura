@@ -32,6 +32,20 @@ class CommandServerProtocol(basic.LineReceiver):
         self.peername = 'unregistered'
         self.factory.updateClients(self)
         log.msg('Connected to %s' %(self.peer))
+        self.tell_client()
+
+    def tell_client(self):
+        player = self.player
+        player.play()
+        volume = str(player.volume)
+        volumecmd = cmd.clientcmd('volume', volume)
+        self.sendLine(volumecmd)
+        if player.playing:
+            playing = player.now
+            seek = str(player.time)
+            value = cmd.join([playing, seek])
+            playcmd = cmd.clientcmd('play', value)
+            self.sendLine(playcmd)
 
     def lineReceived(self, line):
         """

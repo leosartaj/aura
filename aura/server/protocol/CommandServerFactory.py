@@ -11,6 +11,7 @@
 # Twisted imports
 from twisted.python import log
 from twisted.internet.protocol import ServerFactory
+from twisted.internet import reactor
 
 # user Imports
 from CommandServerProtocol import CommandServerProtocol

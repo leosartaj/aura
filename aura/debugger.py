@@ -18,6 +18,8 @@ Picks up local changes
 import sys
 
 # twisted imports
+import pygletreactor
+pygletreactor.install()
 from twisted.internet import reactor
 
 # Other imports
@@ -31,7 +33,4 @@ if __name__ == '__main__':
         start.listen('127.0.0.1', 9001)
     else:
         connect.connect('127.0.0.1', 9001)
-
-
     reactor.run()
-
