@@ -16,8 +16,8 @@ from twisted.protocols import basic
 from twisted.python import log
 
 # User imports
-import command as cmd
-import media
+from aura import command as cmd
+from aura import media
 
 SERVER_PREFIX = cmd.SERVER_PREFIX
 
@@ -32,6 +32,7 @@ class CommandClientProtocol(basic.LineReceiver):
         log.msg('Connected to server at %s' % (self.peer)) # logs the connection
 
         self.player = media.MediaPlayer()
+        self.player.play()
 
         self.name = self.factory.name
         setName = cmd.servercmd('reg', self.name)
@@ -59,8 +60,6 @@ class CommandClientProtocol(basic.LineReceiver):
         comd, value = cmd.parse(line, SERVER_PREFIX)
         player = self.player
         if comd == 'play':
-            if not player.playing:
-                player.play()
             audio, seek = cmd.separate(value)
             player.playFile(audio, seek=float(seek))
             newline = 'Player started playing %s' %(value)

@@ -15,7 +15,7 @@ from twisted.internet import reactor
 
 # user Imports
 from CommandServerProtocol import CommandServerProtocol
-import media
+from aura import media
 
 class CommandServerFactory(ServerFactory):
     """

@@ -16,7 +16,7 @@ from twisted.protocols import basic
 from twisted.python import log
 
 # user imports
-import command as cmd
+from aura import command as cmd
 
 CLIENT_PREFIX = cmd.CLIENT_PREFIX
 
